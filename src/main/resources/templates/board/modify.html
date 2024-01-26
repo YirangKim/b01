@@ -21,17 +21,17 @@
                             <input type="text" class="form-control" th:value="${dto.bno}" name="bno" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Title</span>
+                            <span class="input-group-text">제목</span>
                             <input type="text" class="form-control" name="title" th:value="${dto.title}">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Content</span>
+                            <span class="input-group-text">내용</span>
                             <textarea class="form-control col-sm-5" rows="5" name="content">[[${dto.content}]]</textarea>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Writer</span>
+                            <span class="input-group-text">이름</span>
                             <input type="text" class="form-control" th:value="${dto.writer}" name="writer" readonly>
                         </div>
 
