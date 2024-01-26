@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.dto.BoardDTO;
+import org.zerock.b01.dto.BoardListsReplyCountDTO;
 import org.zerock.b01.dto.PageRequestDTO;
 import org.zerock.b01.dto.PageResponseDTO;
 import org.zerock.b01.repository.BoardRepository;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 @Transactional
-public class BoardServiceImpl implements BoardService {
+public class BoardServiceImpl implements BoardService{
 
     private final ModelMapper modelMapper;
     private final BoardRepository boardRepository;
@@ -59,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) { //BoardRepository 호출 기능
 
         String[] types = pageRequestDTO.getType();
         String keyword = pageRequestDTO.getKeyword();
@@ -75,6 +76,19 @@ public class BoardServiceImpl implements BoardService {
                 .dtoList(dtoList)
                 .total((int)result.getTotalElements())
                 .build();
+    }
 
+    @Override
+    public PageResponseDTO<BoardListsReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO){
+        String[] types = pageRequestDTO.getType();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+        Page<BoardListsReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+        return PageResponseDTO.<BoardListsReplyCountDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent())
+                .total((int)result.getTotalElements())
+                .build();
     }
 }

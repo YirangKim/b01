@@ -9,7 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.b01.domain.Board;
-
+import org.zerock.b01.dto.BoardListsReplyCountDTO;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -91,6 +91,31 @@ public class BoardRepositoryTests {
 
         //prev next
         log.info(result.hasPrevious()+": " +result.hasNext());
+        result.getContent().forEach(board -> log.info(board));
+    }
+
+    @Test
+    public void testSearchReplyCount() {
+
+        String[] types = {"t","c","w"};
+
+        String keyword = "1";
+
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+
+        Page<BoardListsReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable );
+
+        //total pages
+        log.info(result.getTotalPages());
+        //pag size
+        log.info(result.getSize());
+        //pageNumber
+        log.info(result.getNumber());
+        //prev next
+
+        
+        log.info(result.hasPrevious() +": " + result.hasNext());
+
         result.getContent().forEach(board -> log.info(board));
     }
 }

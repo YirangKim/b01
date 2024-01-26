@@ -37,6 +37,8 @@ public class BoardServiceTests {
 
     @Test
     public void testModify(){
+
+        //변경에 필요한 데이터만
         BoardDTO boardDTO = BoardDTO.builder()
                 .bno(101L)
                 .title("Updated...101")
@@ -47,7 +49,7 @@ public class BoardServiceTests {
     }
 
     @Test
-    public void testList() {
+    public void testList() { //페이징처리, 쿼리문 동작
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .type("tcw")
                 .keyword("1")
