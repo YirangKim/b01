@@ -31,6 +31,7 @@ public class BoardController {
     public void list(PageRequestDTO pageRequestDTO, Model model){
         //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
+        // 댓글 수
         PageResponseDTO<BoardListsReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
 
         log.info(responseDTO);

@@ -1,6 +1,7 @@
 package org.zerock.b01.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class ReplyDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
 
-    private LocalDateTime modDate;
+    @JsonIgnore
+    private LocalDateTime modDate; //날짜변경
 
 }

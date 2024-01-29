@@ -90,7 +90,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         query.groupBy(board);
 
-        if( (types != null && types.length > 0) && keyword != null ){
+        if( (types != null && types.length > 0) && keyword != null ) {
 
             BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
 
@@ -114,7 +114,8 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         //bno > 0
         query.where(board.bno.gt(0L));
 
-        JPQLQuery<BoardListsReplyCountDTO> dtoQuery = query.select(Projections.bean(BoardListsReplyCountDTO.class,
+        JPQLQuery<BoardListsReplyCountDTO> dtoQuery = query.select(Projections.
+                bean(BoardListsReplyCountDTO.class,
                 board.bno,
                 board.title,
                 board.writer,
