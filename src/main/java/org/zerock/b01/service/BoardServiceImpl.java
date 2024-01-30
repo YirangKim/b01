@@ -92,4 +92,9 @@ public class BoardServiceImpl implements BoardService{
                 .build();
     }
 
+    @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO){
+        return null;
+    }
+
 }

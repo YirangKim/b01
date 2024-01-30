@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.b01.domain.Reply;
+import org.zerock.b01.dto.BoardListAllDTO;
 import org.zerock.b01.dto.PageRequestDTO;
 import org.zerock.b01.dto.PageResponseDTO;
 import org.zerock.b01.dto.ReplyDTO;
@@ -75,4 +76,6 @@ public class ReplyServiceImpl implements ReplyService{
                 .total((int)result.getTotalElements())
                 .build();
     }
+
+
 }
