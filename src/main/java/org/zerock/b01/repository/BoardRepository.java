@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.repository.search.BoardSearch;
 
-import javax.persistence.Entity;
 import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
 
     @EntityGraph(attributePaths = {"imageSet"})
-    @Query(value = "select b from Board b where b.bno =:bno")
-    Optional<Board> findByWithImages(Long bno);
+    @Query("select b from Board b where b.bno =:bno")
+    Optional<Board> findByIdWithImages(Long bno);
+
 }

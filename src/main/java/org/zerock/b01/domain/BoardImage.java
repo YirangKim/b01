@@ -24,6 +24,7 @@ public class BoardImage implements Comparable<BoardImage> {
     @ManyToOne
     private Board board;
 
+
     @Override
     public int compareTo(BoardImage other) {
         return this.ord - other.ord;

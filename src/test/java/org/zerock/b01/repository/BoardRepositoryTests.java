@@ -12,7 +12,7 @@ import org.springframework.test.annotation.Commit;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.BoardImage;
 import org.zerock.b01.dto.BoardListAllDTO;
-import org.zerock.b01.dto.BoardListsReplyCountDTO;
+import org.zerock.b01.dto.BoardListReplyCountDTO;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -112,7 +112,7 @@ public class BoardRepositoryTests {
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
 
-        Page<BoardListsReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable );
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable );
 
         //total pages
         log.info(result.getTotalPages());
@@ -150,7 +150,7 @@ public class BoardRepositoryTests {
     public void testReadWithImages(){
 
         //반드시 존재하는 bno로 확인
-        Optional<Board> result = boardRepository.findByWithImages(1L);
+        Optional<Board> result = boardRepository.findByIdWithImage(1L);
 
         Board board = result.orElseThrow();
 
@@ -163,11 +163,11 @@ public class BoardRepositoryTests {
 
     @Test
     public void testModifyImages(){
-        Optional<Board> result = boardRepository.findByWithImages(1L);
+        Optional<Board> result = boardRepository.findByIdWithImage(1L);
         Board board = result.orElseThrow();
 
         //기존첨부파일들은 삭제
-        board.clearImages();
+        board.clearImage();
 
         //새로운 첨부파일들
         for(int i = 0; i < 2; i++){
@@ -206,13 +206,16 @@ public class BoardRepositoryTests {
 
     @Transactional
     @Test
-    public void testSearchImageReplyCount(){
+    public void testSearchImageReplyCount() {
+
         Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
-        boardRepository.searchAll(null, null,pageable);
+
+        //boardRepository.searchWithAll(null, null,pageable);
 
         Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
-        log.info("---------------------");
-        log.info(result.getTotalPages());
+
+        log.info("---------------------------");
+        log.info(result.getTotalElements());
 
         result.getContent().forEach(boardListAllDTO -> log.info(boardListAllDTO));
     }

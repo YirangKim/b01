@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.zerock.b01.dto.upload.UploadFileDTO;
 import org.zerock.b01.dto.upload.UploadResultDTO;
 
@@ -20,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
 
 @RestController
 @Log4j2
@@ -80,23 +80,24 @@ public class UpDownController {
         return null;
     }
 
-    @ApiOperation(value = "view파일", notes = "GET방식으로  첨부파일 조회")
+
+    @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
     @GetMapping("/view/{fileName}")
     public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
-        Resource resource = new FileSystemResource(uploadPath+File.separator + fileName);
 
-        String resiurceName = resource.getFilename();
+        Resource resource = new FileSystemResource(uploadPath+File.separator + fileName);
+        String resourceName = resource.getFilename();
         HttpHeaders headers = new HttpHeaders();
 
         try{
-            headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath() ));
-        } catch (Exception e){
+            headers.add("Content-Type", Files.probeContentType( resource.getFile().toPath() ));
+        } catch(Exception e){
             return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
-    @ApiOperation(value = "remove파일", notes = "DELETE 방식으로 파일 삭제")
+    @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
     @DeleteMapping("/remove/{fileName}")
     public Map<String,Boolean> removeFile(@PathVariable String fileName){
 
@@ -106,20 +107,23 @@ public class UpDownController {
         Map<String, Boolean> resultMap = new HashMap<>();
         boolean removed = false;
 
-        try{
+        try {
             String contentType = Files.probeContentType(resource.getFile().toPath());
             removed = resource.getFile().delete();
 
-         //섬네일이 존재한다면
-        if(contentType.startsWith("image")){
-            File thumbnailFile = new File(uploadPath+File.separator +"s_" + fileName);
-            thumbnailFile.delete();
+            //섬네일이 존재한다면
+            if(contentType.startsWith("image")){
+                File thumbnailFile = new File(uploadPath+File.separator +"s_" + fileName);
+                thumbnailFile.delete();
             }
-        } catch (Exception e){
-            log.info(e.getMessage());
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
 
         resultMap.put("result", removed);
+
         return resultMap;
     }
+
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,8 +17,9 @@ import java.time.LocalDateTime;
 public class BoardDTO {
 
     private Long bno;
+
     @NotEmpty
-    @Size(min = 3, max =100)
+    @Size(min = 3, max = 100)
     private String title;
 
     @NotEmpty
@@ -27,5 +29,9 @@ public class BoardDTO {
     private String writer;
 
     private LocalDateTime regDate;
+
     private LocalDateTime modDate;
+
+    //첨부파일의 이름들
+    private List<String> fileNames;
 }
